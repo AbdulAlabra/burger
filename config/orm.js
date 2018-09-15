@@ -32,16 +32,19 @@ var orm = {
         });
     },
     updateOne: function (newInfo, userId, cb) {
-        var sql = "UPDATE SET devoured=? WHERE id=?"
+        var sql = "UPDATE burgers SET devoured=? WHERE id=?"
         connection.query(sql, [newInfo, userId], function (err, result) {
             if (err) throw err
 
             console.log(result);
-
-            cb(result)
         });
     }
 }
+
+
+   
+ 
+
 // INSERT INTO burgers (burger_name) VALUES ('Double Double');
 
 module.exports = orm;

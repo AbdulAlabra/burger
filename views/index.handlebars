@@ -21,7 +21,7 @@
             <h2>Eaten Burger</h2>
 
             {{#each eaten}}
-            <li id="{{id}}" class="eaten">{{burger_name}}</li>
+            <li id="{{id}}" value="{{devoured}}" class="eaten">{{burger_name}}</li>
             {{/each}}
 
         </ul>
@@ -31,7 +31,7 @@
             <ul class="not-eaten-table">
 
                 {{#each notEaten}}
-                <li id="{{id}}" class="not-eaten">{{burger_name}}</li>
+                <li id="{{id}}" value="{{devoured}}" class="not-eaten">{{burger_name}}</li>
                 {{/each}}
             </ul>
 
@@ -56,37 +56,43 @@
 
 
 <script>
-
     $('.eat-it').on('click', function () {
-        $('.not-eaten').each(function () {
+
+        var updateIDs = [];
+        $('li[value="0"]').each(function () {
             var thisId = $(this).attr('id');
+            updateIDs.push(thisId);
+
             var text = $(this).text();
+
             $('.eaten-table').append("<li class=eaten id=" + thisId + ">" + text + "</li>");
+
             $(this).remove();
         });
 
+        console.log(updateIDs);
+
+        $.post("/update", { id: updateIDs }, function (data) {
+            console.log(data);
+        });
     });
 
     $(".add-meal").on('click', function () {
-        var ids_array = [];
-
-        $('li').each(function () {
-
-            var currentIDs = $(this).attr('id');
-            ids_array.push(Number(currentIDs));
-
-        });
-        console.log(ids_array);
-
-        var newId = Math.max(...ids_array) + 1;
-
         var userInput = $(".meal").val().trim();
-        $(".not-eaten-table").append("<li class=not-eaten id=" + newId + ">" + userInput + "</li>")
-        
-        $(".meal").val("")
+        if (userInput === "") {
+            alert("invalid meal");
+        }
+
+        else {
+            $(".not-eaten-table").append("<li class=not-eaten>" + userInput + "</li>")
+
+            var sendData = {
+                name: userInput,
+            }
+
+            $(".meal").val("")
+            $.post("/api", sendData, function (data) { });
+        }
     });
-
-
-
-
+    
 </script>
