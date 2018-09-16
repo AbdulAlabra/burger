@@ -41,7 +41,7 @@ module.exports = function (app) {
 
         var ids_to_update = req.body.name;
         console.log(ids_to_update);
-        res.json(req.body);
+        res.end();
         
         for (var i = 0; i < ids_to_update.length; i++) {
 
