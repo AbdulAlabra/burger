@@ -78,9 +78,10 @@
 
         else {
             var send_ids = {
-                id: updateIDs
+                name: updateIDs,
             }
             $.post("/update", send_ids, function (data) {
+                console.log("helllllllloooooooooooo")
                 console.log(data);
             });
         }

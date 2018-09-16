@@ -36,14 +36,19 @@ module.exports = function (app) {
 
     })
 
+
     app.post("/update", function (req, res) {
 
-        var ids_to_update = req.body.id;
+        var ids_to_update = req.body.name;
         console.log(ids_to_update);
+        res.json(req.body);
+        
         for (var i = 0; i < ids_to_update.length; i++) {
+
             var id = ids_to_update[Number(i)];
             orm.updateOne(true, id, function (data) {
                 console.log(data);
+                // res.json(data);
             });
         }
     });
