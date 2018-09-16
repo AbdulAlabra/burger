@@ -57,25 +57,42 @@
 
 <script>
     $('.eat-it').on('click', function () {
-
         var updateIDs = [];
         $('li[value="0"]').each(function () {
             var thisId = $(this).attr('id');
+
             updateIDs.push(thisId);
 
             var text = $(this).text();
 
-            $('.eaten-table').append("<li class=eaten id=" + thisId + ">" + text + "</li>");
+            $('.eaten-table').append("<li value=1 class=eaten id=" + thisId + ">" + text + "</li>");
 
             $(this).remove();
         });
 
-        console.log(updateIDs);
+        console.log(updateIDs.length);
+        console.log(updateIDs)
+        if (updateIDs.length === 0) {
+            alert("No meal to eat!");
+        }
 
-        $.post("/update", { id: updateIDs }, function (data) {
-            console.log(data);
-        });
+        else {
+            var send_ids = {
+                id: updateIDs
+            }
+            $.post("/update", send_ids, function (data) {
+                console.log(data);
+            });
+        }
     });
+
+
+
+
+
+
+
+
 
     $(".add-meal").on('click', function () {
         var userInput = $(".meal").val().trim();
@@ -84,15 +101,20 @@
         }
 
         else {
-            $(".not-eaten-table").append("<li class=not-eaten>" + userInput + "</li>")
 
             var sendData = {
                 name: userInput,
             }
 
-            $(".meal").val("")
-            $.post("/api", sendData, function (data) { });
+            $.post("/api", sendData, function (id) {
+
+                $(".not-eaten-table").append("<li id=" + id + " value=0 class=not-eaten>" + userInput + "</li>")
+
+                console.log(id);
+
+                $(".meal").val("")
+            });
         }
     });
-    
+
 </script>

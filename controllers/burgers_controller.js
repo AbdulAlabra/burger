@@ -3,7 +3,7 @@ var app = express();
 var orm = require('../config/orm.js');
 
 module.exports = function (app) {
-    
+
     app.get("/", function (req, res) {
 
         orm.selectAll(function (data) {
@@ -30,6 +30,8 @@ module.exports = function (app) {
         // res.send(req.body.name)
         orm.insertOne("burger_name", foodName, function (data) {
             console.log("------------Success---------");
+            res.json(data.insertId);
+            console.log(data.insertId);
         });
 
     })
@@ -38,10 +40,8 @@ module.exports = function (app) {
 
         var ids_to_update = req.body.id;
         console.log(ids_to_update);
-
         for (var i = 0; i < ids_to_update.length; i++) {
             var id = ids_to_update[Number(i)];
-            console.log(id);
             orm.updateOne(true, id, function (data) {
                 console.log(data);
             });
