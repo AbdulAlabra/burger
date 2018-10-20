@@ -19,15 +19,19 @@
 // });
 
 var mysql = require("mysql");
-
-  var connection = mysql.createConnection({
+var connection;
+if (process.env.JAWSDB_URL) {
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+}
+else {
+  connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
     password: "Abosaad123",
     database: "burgers_db"
   });
-
+}
 connection.connect(function (err) {
   if (err) {
     console.error("Connection Error" + err.stack);
@@ -37,3 +41,4 @@ connection.connect(function (err) {
 });
 
 module.exports = connection;
+// mysql://d2o3xod8xq5a9wtj:scqgkimqn0zzeacd@uoa25ublaow4obx5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/tbuhey7gxpmc69ch
