@@ -21,8 +21,7 @@
 var mysql = require("mysql");
 var connection;
 if (process.env.JAWSDB_URL) {
-  connection = mysql.createConnection( "mysql://d2o3xod8xq5a9wtj:scqgkimqn0zzeacd@uoa25ublaow4obx5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/tbuhey7gxpmc69ch"
-  );
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
 }
 else {
   connection = mysql.createConnection({
